@@ -2,15 +2,17 @@ import React, { FC } from "react";
 import { Text } from "../../components/Text";
 import WeatherIcon from "../../assets/WeatherIcon.svg";
 import {
-  Container,
+  LinearGradientContainer,
   ImageContainer,
   TextContainer,
   SubtitleContainer,
+  BeginButtonContainer,
 } from "./style";
+import { Button } from "../../components/Button";
 
 export const Home: FC = () => {
   return (
-    <Container>
+    <LinearGradientContainer>
       <ImageContainer>
         <WeatherIcon width={150} height={150} />
       </ImageContainer>
@@ -34,6 +36,18 @@ export const Home: FC = () => {
           </Text>
         </SubtitleContainer>
       </TextContainer>
-    </Container>
+      <BeginButtonContainer>
+        <Button>
+          <Text
+            fontSize="20px"
+            lineHeight="22px"
+            color="#303345"
+            fontWeight="600"
+          >
+            Iniciar
+          </Text>
+        </Button>
+      </BeginButtonContainer>
+    </LinearGradientContainer>
   );
 };
