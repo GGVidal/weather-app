@@ -1,11 +1,6 @@
 import styled from "styled-components/native";
-import { LinearGradient } from "expo-linear-gradient";
-import { Button } from "../../components/Button";
 
-export const LinearGradientContainer = styled(LinearGradient).attrs({
-  colors: ["#FFF", "#feb054"],
-})`
-  flex: 1;
+export const Container = styled.View`
   padding-horizontal: 36px;
 `;
 
@@ -26,5 +21,5 @@ export const SubtitleContainer = styled.View`
 `;
 
 export const BeginButtonContainer = styled.View`
-  margin-top: 160px;
+  margin-top: 180px;
 `;

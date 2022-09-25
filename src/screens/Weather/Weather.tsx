@@ -1,71 +1,84 @@
 import React, { FC } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import { useEffect, useState } from "react";
-import * as Location from "expo-location";
-import { LocationGeocodedAddress, LocationObject } from "expo-location";
+import {
+  LocationGeocodedAddress,
+  LocationObject,
+  getCurrentPositionAsync,
+  reverseGeocodeAsync,
+  useForegroundPermissions,
+} from "expo-location";
+import { LinearGradientContainer } from "../../common/style";
+import { Container } from "./style";
+import { Text } from "../../components/Text";
 
 export const Weather: FC = () => {
   const [location, setLocation] = useState<LocationObject>();
   const [errorMsg, setErrorMsg] = useState("");
-  const [city, setCity] = useState<LocationGeocodedAddress[]>();
+  const [address, setAddress] = useState<LocationGeocodedAddress[]>();
+  const [, requestPermission] = useForegroundPermissions();
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
+      const { granted } = await requestPermission();
+      if (granted) {
+        const locationCoord = await getCurrentPositionAsync();
+        setLocation(locationCoord);
       }
-
-      let locationCoord = await Location.getCurrentPositionAsync();
-      setLocation(locationCoord);
     })();
   }, []);
   useEffect(() => {
     (async () => {
       if (location) {
-        let cityLocation = await Location.reverseGeocodeAsync({
+        let cityLocation = await reverseGeocodeAsync({
           latitude: location?.coords.latitude,
           longitude: location?.coords.longitude,
         });
         console.log(cityLocation);
         if (cityLocation) {
-          setCity(cityLocation);
+          setAddress(cityLocation);
         }
       }
     })();
   }, [location]);
   console.log("GG", location);
+  const { city = {}, country = {} } = address[0];
   return (
-    <View style={styles.container}>
-      {location && (
-        <MapView
-          region={{
-            latitude: location.coords?.latitude,
-            longitude: location.coords?.longitude,
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
-          }}
-          style={styles.map}
-        >
-          <Marker
-            title="My Location"
-            description="My location"
-            coordinate={{
-              latitude: location.coords?.latitude,
-              longitude: location.coords?.longitude,
-            }}
-          />
-        </MapView>
-      )}
-    </View>
+    <LinearGradientContainer>
+      <>
+        <Container>
+          <Text fontSize="24px" color="#313341" fontWeight="500">
+            {address[0] && `${city},\n${country}`}
+          </Text>
+          {location && (
+            <MapView
+              region={{
+                latitude: location.coords?.latitude,
+                longitude: location.coords?.longitude,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+              }}
+              style={styles.map}
+            >
+              <Marker
+                title="My Location"
+                description="My location"
+                coordinate={{
+                  latitude: location.coords?.latitude,
+                  longitude: location.coords?.longitude,
+                }}
+              />
+            </MapView>
+          )}
+        </Container>
+      </>
+    </LinearGradientContainer>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
