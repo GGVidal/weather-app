@@ -29,8 +29,8 @@ export const WeatherIconContainer = styled.View`
   background-color: #fff;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 35px;
+  height: 35px;
   border-radius: 8px;
   margin-right: 8px;
 `;

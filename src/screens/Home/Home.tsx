@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
 import { Text } from "../../components/Text";
-import WeatherIcon from "../../assets/WeatherIcon.svg";
 import {
   ImageContainer,
   Container,
@@ -12,6 +11,7 @@ import { Button } from "../../components/Button";
 import { requestForegroundPermissionsAsync } from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradientContainer } from "../../common/style";
+import { WeatherIcon } from "../../assets";
 
 export const Home: FC = () => {
   const [errorMsg, setErrorMsg] = useState("");

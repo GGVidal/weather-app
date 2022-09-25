@@ -1,3 +1,5 @@
+import { SvgProps } from "react-native-svg";
+
 export interface WeatherProps {
   base: string;
   clouds: Clouds;
@@ -61,6 +63,6 @@ export interface WeatherInfosProps {
 }
 
 export interface CommonInfosProps {
-  icon: string;
+  icon: JSX.Element;
   value: number;
 }

@@ -19,12 +19,32 @@ import {
 import { Text } from "../../components/Text";
 import { fetchWeatherByLatLong } from "../../utils/api";
 import { WeatherInfosProps, WeatherProps } from "../../common/types/weather";
+import { WeatherInfosEnum } from "../../common/types/enum";
+import { Humidity, Wind } from "../../assets";
 
 export const Weather: FC = () => {
   const [location, setLocation] = useState<LocationObject>();
   const [address, setAddress] = useState<LocationGeocodedAddress[]>();
   const [weatherData, setWeatherData] = useState<WeatherProps>();
   const [, requestPermission] = useForegroundPermissions();
+
+  interface infoWeatherProps {
+    info: "windSpeed" | "humidity" | "tempMin" | "tempMax";
+  }
+
+  const handleWeatherInfo = (info: infoWeatherProps, value: number) => {
+    let unitValue;
+    if (info === "windSpeed") {
+      unitValue = "m/s";
+    }
+    if (info === "humidity") {
+      unitValue = "%";
+    }
+    if (info === "tempMin" || info === "tempMax") {
+      unitValue = "°C";
+    }
+    return `${value} ${unitValue}`;
+  };
   useEffect(() => {
     (async () => {
       const { granted } = await requestPermission();
@@ -72,32 +92,34 @@ export const Weather: FC = () => {
       } = weatherData;
       const weatherInfos: WeatherInfosProps = {
         windSpeed: {
-          icon: "",
+          icon: <Wind width={35} height={35} />,
           value: speed,
         },
         humidity: {
-          icon: "",
+          icon: <Humidity width={35} height={35} />,
           value: humidityInfo,
         },
         tempMin: {
-          icon: "",
+          icon: <Wind width={35} height={35} />,
           value: tempMin,
         },
         tempMax: {
-          icon: "",
+          icon: <Wind width={35} height={35} />,
           value: tempMax,
         },
       };
       const weatherKeys: string[] = Object.keys(weatherInfos);
-      return weatherKeys.map((info, index) => {
+      return weatherKeys.map((info: infoWeatherProps, index) => {
         return (
           <WeatherInfoContainer key={index}>
-            <WeatherIconContainer />
+            <WeatherIconContainer>
+              {weatherInfos[info].icon}
+            </WeatherIconContainer>
             <Text fontSize="12px" color="#303345" fontWeight="300">
-              {info}
+              {WeatherInfosEnum[info]}
             </Text>
             <Text fontSize="12px" color="#303345" fontWeight="300">
-              {weatherInfos[info].value}
+              {handleWeatherInfo(info, weatherInfos[info].value)}
             </Text>
           </WeatherInfoContainer>
         );
