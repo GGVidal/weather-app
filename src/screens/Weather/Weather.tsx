@@ -3,11 +3,12 @@ import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
-import { LocationObject } from "expo-location";
+import { LocationGeocodedAddress, LocationObject } from "expo-location";
 
 export const Weather: FC = () => {
   const [location, setLocation] = useState<LocationObject>();
   const [errorMsg, setErrorMsg] = useState("");
+  const [city, setCity] = useState<LocationGeocodedAddress[]>();
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -20,16 +21,30 @@ export const Weather: FC = () => {
       setLocation(locationCoord);
     })();
   }, []);
+  useEffect(() => {
+    (async () => {
+      if (location) {
+        let cityLocation = await Location.reverseGeocodeAsync({
+          latitude: location?.coords.latitude,
+          longitude: location?.coords.longitude,
+        });
+        console.log(cityLocation);
+        if (cityLocation) {
+          setCity(cityLocation);
+        }
+      }
+    })();
+  }, [location]);
   console.log("GG", location);
   return (
     <View style={styles.container}>
       {location && (
         <MapView
-          initialRegion={{
+          region={{
             latitude: location.coords?.latitude,
             longitude: location.coords?.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1,
           }}
           style={styles.map}
         >
@@ -59,3 +74,5 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height / 2,
   },
 });
+
+// -5.208086128097803, -37.33013351542919
