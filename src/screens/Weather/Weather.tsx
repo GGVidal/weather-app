@@ -1,6 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 import {
   LocationGeocodedAddress,
@@ -10,13 +10,20 @@ import {
   useForegroundPermissions,
 } from "expo-location";
 import { LinearGradientContainer } from "../../common/style";
-import { Container } from "./style";
+import {
+  Container,
+  TemperatureContainer,
+  WeatherIconContainer,
+  WeatherInfoContainer,
+} from "./style";
 import { Text } from "../../components/Text";
+import { fetchWeatherByLatLong } from "../../utils/api";
+import { WeatherInfosProps, WeatherProps } from "../../common/types/weather";
 
 export const Weather: FC = () => {
   const [location, setLocation] = useState<LocationObject>();
-  const [errorMsg, setErrorMsg] = useState("");
   const [address, setAddress] = useState<LocationGeocodedAddress[]>();
+  const [weatherData, setWeatherData] = useState<WeatherProps>();
   const [, requestPermission] = useForegroundPermissions();
   useEffect(() => {
     (async () => {
@@ -24,32 +31,98 @@ export const Weather: FC = () => {
       if (granted) {
         const locationCoord = await getCurrentPositionAsync();
         setLocation(locationCoord);
+        if (locationCoord) {
+          let cityLocation = await reverseGeocodeAsync({
+            latitude: locationCoord?.coords.latitude,
+            longitude: locationCoord?.coords.longitude,
+          });
+          if (cityLocation) {
+            setAddress(cityLocation);
+          }
+        }
       }
     })();
   }, []);
   useEffect(() => {
-    (async () => {
-      if (location) {
-        let cityLocation = await reverseGeocodeAsync({
-          latitude: location?.coords.latitude,
-          longitude: location?.coords.longitude,
-        });
-        console.log(cityLocation);
-        if (cityLocation) {
-          setAddress(cityLocation);
-        }
-      }
-    })();
+    if (location) {
+      fetchWeatherByLatLong(
+        location?.coords.latitude,
+        location?.coords.longitude
+      )
+        .then((json) => setWeatherData(json))
+        .catch((err: TypeError) => console.log(err));
+    }
   }, [location]);
-  console.log("GG", location);
-  const { city = {}, country = {} } = address[0];
+
+  const renderText = useCallback(() => {
+    if (address[0]) {
+      return (
+        <Text fontSize="24px" color="#313341" fontWeight="500">
+          {`${address[0]?.city},\n${address[0]?.country}`}
+        </Text>
+      );
+    }
+  }, [address]);
+
+  const renderWeatherInfo = useCallback(() => {
+    if (weatherData) {
+      const {
+        wind: { speed },
+        main: { temp_max: tempMax, humidity: humidityInfo, temp_min: tempMin },
+      } = weatherData;
+      const weatherInfos: WeatherInfosProps = {
+        windSpeed: {
+          icon: "",
+          value: speed,
+        },
+        humidity: {
+          icon: "",
+          value: humidityInfo,
+        },
+        tempMin: {
+          icon: "",
+          value: tempMin,
+        },
+        tempMax: {
+          icon: "",
+          value: tempMax,
+        },
+      };
+      const weatherKeys: string[] = Object.keys(weatherInfos);
+      return weatherKeys.map((info, index) => {
+        return (
+          <WeatherInfoContainer key={index}>
+            <WeatherIconContainer />
+            <Text fontSize="12px" color="#303345" fontWeight="300">
+              {info}
+            </Text>
+            <Text fontSize="12px" color="#303345" fontWeight="300">
+              {weatherInfos[info].value}
+            </Text>
+          </WeatherInfoContainer>
+        );
+      });
+    }
+  }, [weatherData]);
+
   return (
     <LinearGradientContainer>
       <>
         <Container>
-          <Text fontSize="24px" color="#313341" fontWeight="500">
-            {address[0] && `${city},\n${country}`}
-          </Text>
+          {!!address && renderText()}
+          {weatherData && (
+            <>
+              <TemperatureContainer>
+                <Text fontSize="53px" color="#303345" fontWeight="700">
+                  {Math.round(weatherData.main.temp)}
+                </Text>
+                <Text fontSize="12px" color="#303345" fontWeight="400">
+                  {` °C`}
+                </Text>
+              </TemperatureContainer>
+              {renderWeatherInfo()}
+            </>
+          )}
           {location && (
             <MapView
               region={{
@@ -77,15 +150,8 @@ export const Weather: FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height / 2,
   },
 });
-
-// -5.208086128097803, -37.33013351542919
