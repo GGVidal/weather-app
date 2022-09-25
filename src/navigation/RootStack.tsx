@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { RootStack } from "./types";
 import { Weather } from "../screens/Weather";
 import { Home } from "../screens/Home";
+import { ScrollView } from "react-native";
 const Stack = createStackNavigator<RootStack>();
 
 export const RootStackRoutes: FC = () => {

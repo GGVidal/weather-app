@@ -12,6 +12,7 @@ import { requestForegroundPermissionsAsync } from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradientContainer } from "../../common/style";
 import { WeatherIcon } from "../../assets";
+import { ScrollView } from "react-native-gesture-handler";
 
 export const Home: FC = () => {
   const [errorMsg, setErrorMsg] = useState("");
@@ -27,7 +28,7 @@ export const Home: FC = () => {
 
   return (
     <LinearGradientContainer>
-      <>
+      <ScrollView>
         <Container>
           <ImageContainer>
             <WeatherIcon width={150} height={150} />
@@ -65,7 +66,7 @@ export const Home: FC = () => {
             </Button>
           </BeginButtonContainer>
         </Container>
-      </>
+      </ScrollView>
     </LinearGradientContainer>
   );
 };

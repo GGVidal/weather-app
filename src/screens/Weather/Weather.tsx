@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Image } from "react-native";
 import { useEffect, useState } from "react";
 import {
   LocationGeocodedAddress,
@@ -11,8 +11,10 @@ import {
 } from "expo-location";
 import { LinearGradientContainer } from "../../common/style";
 import {
+  CelsiusContainer,
   Container,
   TemperatureContainer,
+  TemperatureIconContainer,
   WeatherIconContainer,
   WeatherInfoContainer,
 } from "./style";
@@ -21,6 +23,7 @@ import { fetchWeatherByLatLong } from "../../utils/api";
 import { WeatherInfosProps, WeatherProps } from "../../common/types/weather";
 import { WeatherInfosEnum } from "../../common/types/enum";
 import { Humidity, Wind } from "../../assets";
+import { ScrollView } from "react-native-gesture-handler";
 
 export const Weather: FC = () => {
   const [location, setLocation] = useState<LocationObject>();
@@ -28,11 +31,7 @@ export const Weather: FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherProps>();
   const [, requestPermission] = useForegroundPermissions();
 
-  interface infoWeatherProps {
-    info: "windSpeed" | "humidity" | "tempMin" | "tempMax";
-  }
-
-  const handleWeatherInfo = (info: infoWeatherProps, value: number) => {
+  const handleWeatherInfo = (info: string, value: number) => {
     let unitValue;
     if (info === "windSpeed") {
       unitValue = "m/s";
@@ -84,6 +83,21 @@ export const Weather: FC = () => {
     }
   }, [address]);
 
+  const renderWeatherIcon = useCallback(() => {
+    if (weatherData) {
+      const { weather } = weatherData;
+      const { icon } = weather[0];
+      return (
+        <TemperatureIconContainer>
+          <Image
+            style={{ width: 120, height: 120 }}
+            source={{ uri: `http://openweathermap.org/img/wn/${icon}@2x.png` }}
+          />
+        </TemperatureIconContainer>
+      );
+    }
+  }, [weatherData]);
+
   const renderWeatherInfo = useCallback(() => {
     if (weatherData) {
       const {
@@ -93,23 +107,23 @@ export const Weather: FC = () => {
       const weatherInfos: WeatherInfosProps = {
         windSpeed: {
           icon: <Wind width={35} height={35} />,
-          value: speed,
+          value: Math.round(speed),
         },
         humidity: {
           icon: <Humidity width={35} height={35} />,
-          value: humidityInfo,
+          value: Math.round(humidityInfo),
         },
         tempMin: {
           icon: <Wind width={35} height={35} />,
-          value: tempMin,
+          value: Math.round(tempMin),
         },
         tempMax: {
           icon: <Wind width={35} height={35} />,
-          value: tempMax,
+          value: Math.round(tempMax),
         },
       };
       const weatherKeys: string[] = Object.keys(weatherInfos);
-      return weatherKeys.map((info: infoWeatherProps, index) => {
+      return weatherKeys.map((info: string, index) => {
         return (
           <WeatherInfoContainer key={index}>
             <WeatherIconContainer>
@@ -129,18 +143,21 @@ export const Weather: FC = () => {
 
   return (
     <LinearGradientContainer>
-      <>
+      <ScrollView>
         <Container>
           {!!address && renderText()}
           {weatherData && (
             <>
               <TemperatureContainer>
-                <Text fontSize="53px" color="#303345" fontWeight="700">
-                  {Math.round(weatherData.main.temp)}
-                </Text>
-                <Text fontSize="12px" color="#303345" fontWeight="400">
-                  {` °C`}
-                </Text>
+                {renderWeatherIcon()}
+                <CelsiusContainer>
+                  <Text fontSize="53px" color="#303345" fontWeight="700">
+                    {Math.round(weatherData.main.temp)}
+                  </Text>
+                  <Text fontSize="12px" color="#303345" fontWeight="400">
+                    {`°C`}
+                  </Text>
+                </CelsiusContainer>
               </TemperatureContainer>
               {renderWeatherInfo()}
             </>
@@ -166,7 +183,7 @@ export const Weather: FC = () => {
             </MapView>
           )}
         </Container>
-      </>
+      </ScrollView>
     </LinearGradientContainer>
   );
 };

@@ -7,7 +7,8 @@ export const Container = styled.View`
 
 export const TemperatureContainer = styled.View`
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 95px;
   margin-bottom: 24px;
   margin-right: 44px;
@@ -33,4 +34,12 @@ export const WeatherIconContainer = styled.View`
   height: 35px;
   border-radius: 8px;
   margin-right: 8px;
+`;
+
+export const CelsiusContainer = styled.View`
+  flex-direction: row;
+`;
+
+export const TemperatureIconContainer = styled.View`
+  margin-left: 30px;
 `;
