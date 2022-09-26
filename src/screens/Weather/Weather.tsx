@@ -28,6 +28,7 @@ import { Humidity, Wind } from "../../assets";
 import { ScrollView } from "react-native-gesture-handler";
 import { Map } from "../../components/Map";
 import { WeatherInfoItem } from "./components/WeatherInfoItem";
+import { getWeatherInfoObject } from "../../utils/weather";
 
 export const Weather: FC = () => {
   const [location, setLocation] = useState<LocationObject>();
@@ -76,6 +77,7 @@ export const Weather: FC = () => {
 
   const renderWeatherIcon = useCallback(() => {
     if (weatherData) {
+      console.log("gg weather data", weatherData);
       const { weather } = weatherData;
       const { icon } = weather[0];
       return (
@@ -95,24 +97,12 @@ export const Weather: FC = () => {
         wind: { speed },
         main: { temp_max: tempMax, humidity: humidityInfo, temp_min: tempMin },
       } = weatherData;
-      const weatherInfos: WeatherInfosProps = {
-        windSpeed: {
-          icon: <Wind width={35} height={35} />,
-          value: Math.round(speed),
-        },
-        humidity: {
-          icon: <Humidity width={35} height={35} />,
-          value: Math.round(humidityInfo),
-        },
-        tempMin: {
-          icon: <Wind width={35} height={35} />,
-          value: Math.round(tempMin),
-        },
-        tempMax: {
-          icon: <Wind width={35} height={35} />,
-          value: Math.round(tempMax),
-        },
-      };
+      const weatherInfos = getWeatherInfoObject(
+        humidityInfo,
+        speed,
+        tempMin,
+        tempMax
+      );
       const weatherKeys: string[] = Object.keys(weatherInfos);
       return weatherKeys.map((info: string, index) => {
         const weatherObj: CommonInfosProps = weatherInfos[info];

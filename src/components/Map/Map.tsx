@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import { StyleSheet, Dimensions } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import { Marker } from "react-native-maps";
 import { MapProps } from "./types";
+import { MapContainer } from "./style";
 
 const DELTA_VALUE = 0.1;
 
@@ -19,30 +19,18 @@ export const Map: FC<MapProps> = ({
     streetNumber: "",
   };
   return (
-    <MapView
+    <MapContainer
       region={{
         ...coordObj,
         latitudeDelta: DELTA_VALUE,
         longitudeDelta: DELTA_VALUE,
       }}
-      style={styles.map}
     >
       <Marker
         title={`${city}, ${district}`}
         description={`${street}, ${streetNumber}`}
         coordinate={coordObj}
       />
-    </MapView>
+    </MapContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  map: {
-    width: Dimensions.get("window").width - 30,
-    height: Dimensions.get("window").height / 2,
-    marginTop: 20,
-    borderRadius: 10,
-    marginBottom: 40,
-    // marginRight: Dimensions.get("window").width / 2,
-  },
-});
