@@ -12,15 +12,19 @@ import { requestForegroundPermissionsAsync } from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradientContainer } from "../../common/style";
 import { WeatherIcon } from "../../assets";
-import { ScrollView } from "react-native";
+import { Alert, ScrollView } from "react-native";
 
 export const Home: FC = () => {
-  const [errorMsg, setErrorMsg] = useState("");
   const { navigate } = useNavigation();
   const askPermissions = async () => {
     const { status } = await requestForegroundPermissionsAsync();
     if (status !== "granted") {
-      setErrorMsg("Permissão negada!");
+      Alert.alert("Localização", "Por favor permitir o acesso a localização", [
+        {
+          text: "Ok",
+          style: "cancel",
+        },
+      ]);
       return;
     }
     navigate("Weather");

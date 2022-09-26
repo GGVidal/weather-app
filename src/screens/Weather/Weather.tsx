@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useLayoutEffect } from "react";
-import { Image } from "react-native";
+import { Alert, Image } from "react-native";
 import { useEffect, useState } from "react";
 import {
   LocationGeocodedAddress,
@@ -54,14 +54,17 @@ export const Weather: FC = () => {
   useEffect(() => {
     (async () => {
       const { granted } = await requestPermission();
+      console.log("gg granted", granted);
       if (granted) {
         const locationCoord = await getCurrentPositionAsync();
+        console.log("gg location coord", locationCoord);
         setLocation(locationCoord);
         if (locationCoord) {
           let cityLocation = await reverseGeocodeAsync({
             latitude: locationCoord?.coords.latitude,
             longitude: locationCoord?.coords.longitude,
           });
+          console.log("GG CITY LOCATION", cityLocation);
           if (cityLocation) {
             setAddress(cityLocation);
           }
@@ -71,12 +74,25 @@ export const Weather: FC = () => {
   }, []);
   useEffect(() => {
     if (location) {
+      console.log("GG GET LOCATION TO FETCH DATA");
+
       fetchWeatherByLatLong(
         location?.coords.latitude,
         location?.coords.longitude
       )
-        .then((json) => setWeatherData(json))
-        .catch((err: TypeError) => console.log(err));
+        .then((json) => {
+          console.log("GG JSON", json);
+          setWeatherData(json);
+        })
+        .catch((err: TypeError) => {
+          console.log("gg error", err);
+          return Alert.alert("Error", err.name, [
+            {
+              text: "Ok",
+              style: "cancel",
+            },
+          ]);
+        });
     }
   }, [location]);
 

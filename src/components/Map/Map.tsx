@@ -20,6 +20,9 @@ export const Map: FC<MapProps> = ({
   };
   return (
     <MapContainer
+      zoomControlEnabled={true}
+      scrollDuringRotateOrZoomEnabled
+      zoomTapEnabled
       region={{
         ...coordObj,
         latitudeDelta: DELTA_VALUE,

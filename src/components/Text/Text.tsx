@@ -6,7 +6,6 @@ export const Text: FC<TextProps> = ({
   color,
   fontSize,
   fontWeight,
-  letterSpacing,
   children,
   lineHeight,
 }) => {
@@ -15,7 +14,6 @@ export const Text: FC<TextProps> = ({
       color={color}
       fontSize={fontSize}
       fontWeight={fontWeight}
-      letterSpacing={letterSpacing}
       lineHeight={lineHeight}
     >
       {children}
