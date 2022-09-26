@@ -20,7 +20,7 @@ import { Text } from "../../components/Text";
 import { fetchWeatherByLatLong } from "../../utils/api";
 import { WeatherProps, CommonInfosProps } from "../../common/types/weather";
 import { WeatherInfosEnum } from "../../common/types/enum";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import { Map } from "../../components/Map";
 import { WeatherInfoItem } from "./components/WeatherInfoItem";
 import { getWeatherInfoObject } from "../../utils/weather";
@@ -44,10 +44,10 @@ export const Weather: FC = () => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
-
+  // console.log("gg", await requestPermission());
   useLayoutEffect(() => {
     setOptions({
-      headerRight: () => <FAB onPress={onRefresh} />,
+      headerRight: () => <FAB testID="fab_button" onPress={onRefresh} />,
     });
   }, []);
 

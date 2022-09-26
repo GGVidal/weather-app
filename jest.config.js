@@ -1,8 +1,10 @@
 const esModules = ["react-native", "@react-native", "@react-navigation"].join(
   "|"
 );
+const expoPreset = require("jest-expo/jest-preset");
 
 module.exports = {
+  ...expoPreset,
   clearMocks: true,
   setupFilesAfterEnv: [
     "@testing-library/jest-native/extend-expect",
@@ -22,7 +24,7 @@ module.exports = {
   moduleNameMapper: {
     "\\.svg": "<rootDir>/src/__mocks__/svgMock.ts",
   },
-  preset: "react-native",
+  preset: "jest-expo",
   moduleFileExtensions: ["js", "jsx", "ts", "tsx", "json", "node", "d.ts"],
   transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
   testPathIgnorePatterns: ["/lib/", "/node_modules/"],

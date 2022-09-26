@@ -12,7 +12,7 @@ import { requestForegroundPermissionsAsync } from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradientContainer } from "../../common/style";
 import { WeatherIcon } from "../../assets";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 
 export const Home: FC = () => {
   const [errorMsg, setErrorMsg] = useState("");
@@ -54,7 +54,7 @@ export const Home: FC = () => {
             </SubtitleContainer>
           </TextContainer>
           <BeginButtonContainer>
-            <Button onPress={askPermissions}>
+            <Button testID="button-permission" onPress={askPermissions}>
               <Text
                 fontSize="20px"
                 lineHeight="22px"
