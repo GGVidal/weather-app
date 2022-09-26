@@ -27,7 +27,7 @@ import { getWeatherInfoObject } from "../../utils/weather";
 import { useNavigation } from "@react-navigation/native";
 import { FAB } from "../../components/FAB";
 
-const wait = (timeout) => {
+const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
