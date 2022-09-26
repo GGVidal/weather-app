@@ -12,6 +12,7 @@ import { LinearGradientContainer } from "../../common/style";
 import {
   CelsiusContainer,
   Container,
+  LocationContainer,
   TemperatureContainer,
   TemperatureIconContainer,
 } from "./style";
@@ -25,7 +26,6 @@ import {
 import { WeatherInfosEnum } from "../../common/types/enum";
 import { Humidity, Wind } from "../../assets";
 import { ScrollView } from "react-native-gesture-handler";
-import { handleWeatherInfo } from "../../utils/weather";
 import { Map } from "../../components/Map";
 import { WeatherInfoItem } from "./components/WeatherInfoItem";
 
@@ -65,7 +65,7 @@ export const Weather: FC = () => {
   }, [location]);
 
   const renderText = useCallback(() => {
-    if (address[0]) {
+    if (address?.length) {
       return (
         <Text fontSize="24px" color="#313341" fontWeight="500">
           {`${address[0]?.city},\n${address[0]?.country}`}
@@ -131,7 +131,7 @@ export const Weather: FC = () => {
 
   return (
     <LinearGradientContainer>
-      <ScrollView>
+      <ScrollView bounces={false}>
         <Container>
           {!!address && renderText()}
           {weatherData && (
@@ -150,11 +150,25 @@ export const Weather: FC = () => {
               {renderWeatherInfo()}
             </>
           )}
-          {location && (
-            <Map
-              latitude={location.coords?.latitude}
-              longitude={location.coords?.longitude}
-            />
+          {location && !!address && (
+            <LocationContainer>
+              <Text fontSize="30px" color="#303345" fontWeight="700">
+                Minha Localização
+              </Text>
+              <Text
+                fontSize="12px"
+                lineHeight="20px"
+                color="#9A938C"
+                fontWeight="400"
+              >
+                Clique no marcador
+              </Text>
+              <Map
+                address={address[0]}
+                latitude={location.coords?.latitude}
+                longitude={location.coords?.longitude}
+              />
+            </LocationContainer>
           )}
         </Container>
       </ScrollView>

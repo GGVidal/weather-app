@@ -1,3 +1,5 @@
+import { WeatherInfosProps } from "../common/types/weather";
+
 export const handleWeatherInfo = (info: string, value: number) => {
   let unitValue;
   if (info === "windSpeed") {
@@ -11,3 +13,7 @@ export const handleWeatherInfo = (info: string, value: number) => {
   }
   return `${value} ${unitValue}`;
 };
+
+// export const renderWeatherInfoObject = ({humidity, tempMax, tempMin, windSpeed}: WeatherInfosProps) => {
+
+// }
