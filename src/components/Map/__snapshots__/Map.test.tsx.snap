@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly works 1`] = `
+<AIRMap
+  initialRegion={null}
+  onChange={[Function]}
+  onLayout={[Function]}
+  onMapReady={[Function]}
+  onMarkerPress={[Function]}
+  region={
+    Object {
+      "city": "",
+      "district": "",
+      "latitude": 0,
+      "latitudeDelta": 0.1,
+      "longitude": 0,
+      "longitudeDelta": 0.1,
+      "street": "",
+      "streetNumber": "",
+    }
+  }
+  style={
+    Array [
+      Object {
+        "borderRadius": 10,
+        "height": 667,
+        "marginBottom": 40,
+        "marginTop": 20,
+        "width": 720,
+      },
+    ]
+  }
+>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "city": "",
+        "district": "",
+        "latitude": 0,
+        "longitude": 0,
+        "street": "",
+        "streetNumber": "",
+      }
+    }
+    description="null, null"
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+    title="null, null"
+  />
+</AIRMap>
+`;

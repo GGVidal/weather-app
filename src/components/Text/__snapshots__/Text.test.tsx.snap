@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly works 1`] = `
+<Text
+  color="red"
+  fontSize="10px"
+  fontWeight="300"
+  style={
+    Array [
+      Object {
+        "color": "red",
+        "fontSize": 10,
+        "fontWeight": "300",
+        "letterSpacing": "",
+        "lineHeight": "",
+      },
+    ]
+  }
+>
+  My text
+</Text>
+`;

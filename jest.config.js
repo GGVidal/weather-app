@@ -19,6 +19,9 @@ module.exports = {
   moduleDirectories: ["node_modules", "lib"],
   coverageReporters: ["html", "json", "text-summary"],
   modulePathIgnorePatterns: ["<rootDir>/lib/"],
+  moduleNameMapper: {
+    "\\.svg": "<rootDir>/src/__mocks__/svgMock.ts",
+  },
   preset: "react-native",
   moduleFileExtensions: ["js", "jsx", "ts", "tsx", "json", "node", "d.ts"],
   transformIgnorePatterns: [`/node_modules/(?!${esModules})`],

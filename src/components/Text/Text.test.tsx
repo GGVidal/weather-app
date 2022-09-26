@@ -1,12 +1,14 @@
 import React from "react";
 import TestRenderer from "react-test-renderer";
 
-import { FAB } from "../FAB";
+import { Text } from "../Text";
 
 describe("renders correctly", () => {
   it("works", () => {
     const renderer = TestRenderer.create(
-      <FAB onPress={() => console.log("gg")} />
+      <Text fontSize={"10px"} color={"red"} fontWeight={"300"}>
+        My text
+      </Text>
     );
     expect(renderer).toMatchSnapshot();
   });
