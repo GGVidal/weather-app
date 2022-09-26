@@ -1,3 +1,4 @@
+import React from "react";
 import { WeatherInfosProps } from "../common/types/weather";
 import { Humidity, Wind } from "../assets";
 

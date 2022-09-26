@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useLayoutEffect } from "react";
 import { Image } from "react-native";
 import { useEffect, useState } from "react";
 import {
@@ -18,23 +18,38 @@ import {
 } from "./style";
 import { Text } from "../../components/Text";
 import { fetchWeatherByLatLong } from "../../utils/api";
-import {
-  WeatherInfosProps,
-  WeatherProps,
-  CommonInfosProps,
-} from "../../common/types/weather";
+import { WeatherProps, CommonInfosProps } from "../../common/types/weather";
 import { WeatherInfosEnum } from "../../common/types/enum";
-import { Humidity, Wind } from "../../assets";
 import { ScrollView } from "react-native-gesture-handler";
 import { Map } from "../../components/Map";
 import { WeatherInfoItem } from "./components/WeatherInfoItem";
 import { getWeatherInfoObject } from "../../utils/weather";
+import { useNavigation } from "@react-navigation/native";
+import { FAB } from "../../components/FAB";
+
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 export const Weather: FC = () => {
   const [location, setLocation] = useState<LocationObject>();
   const [address, setAddress] = useState<LocationGeocodedAddress[]>();
   const [weatherData, setWeatherData] = useState<WeatherProps>();
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
   const [, requestPermission] = useForegroundPermissions();
+  const { setOptions } = useNavigation();
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  useLayoutEffect(() => {
+    setOptions({
+      headerRight: () => <FAB onPress={onRefresh} />,
+    });
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -77,7 +92,6 @@ export const Weather: FC = () => {
 
   const renderWeatherIcon = useCallback(() => {
     if (weatherData) {
-      console.log("gg weather data", weatherData);
       const { weather } = weatherData;
       const { icon } = weather[0];
       return (

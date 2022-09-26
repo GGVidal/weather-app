@@ -40,6 +40,10 @@ export const CelsiusContainer = styled.View`
   flex-direction: row;
 `;
 
+export const TemperatureIconContainer = styled.View`
+  margin-left: 30px;
+`;
+
 export const LocationContainer = styled.View`
   margin-top: 20px;
 `;
