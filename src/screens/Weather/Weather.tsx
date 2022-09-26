@@ -1,6 +1,5 @@
 import React, { FC, useCallback } from "react";
-import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, Dimensions, Image } from "react-native";
+import { Image } from "react-native";
 import { useEffect, useState } from "react";
 import {
   LocationGeocodedAddress,
@@ -15,15 +14,20 @@ import {
   Container,
   TemperatureContainer,
   TemperatureIconContainer,
-  WeatherIconContainer,
-  WeatherInfoContainer,
 } from "./style";
 import { Text } from "../../components/Text";
 import { fetchWeatherByLatLong } from "../../utils/api";
-import { WeatherInfosProps, WeatherProps } from "../../common/types/weather";
+import {
+  WeatherInfosProps,
+  WeatherProps,
+  CommonInfosProps,
+} from "../../common/types/weather";
 import { WeatherInfosEnum } from "../../common/types/enum";
 import { Humidity, Wind } from "../../assets";
 import { ScrollView } from "react-native-gesture-handler";
+import { handleWeatherInfo } from "../../utils/weather";
+import { Map } from "../../components/Map";
+import { WeatherInfoItem } from "./components/WeatherInfoItem";
 
 export const Weather: FC = () => {
   const [location, setLocation] = useState<LocationObject>();
@@ -31,19 +35,6 @@ export const Weather: FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherProps>();
   const [, requestPermission] = useForegroundPermissions();
 
-  const handleWeatherInfo = (info: string, value: number) => {
-    let unitValue;
-    if (info === "windSpeed") {
-      unitValue = "m/s";
-    }
-    if (info === "humidity") {
-      unitValue = "%";
-    }
-    if (info === "tempMin" || info === "tempMax") {
-      unitValue = "°C";
-    }
-    return `${value} ${unitValue}`;
-  };
   useEffect(() => {
     (async () => {
       const { granted } = await requestPermission();
@@ -124,18 +115,15 @@ export const Weather: FC = () => {
       };
       const weatherKeys: string[] = Object.keys(weatherInfos);
       return weatherKeys.map((info: string, index) => {
+        const weatherObj: CommonInfosProps = weatherInfos[info];
         return (
-          <WeatherInfoContainer key={index}>
-            <WeatherIconContainer>
-              {weatherInfos[info].icon}
-            </WeatherIconContainer>
-            <Text fontSize="12px" color="#303345" fontWeight="300">
-              {WeatherInfosEnum[info]}
-            </Text>
-            <Text fontSize="12px" color="#303345" fontWeight="300">
-              {handleWeatherInfo(info, weatherInfos[info].value)}
-            </Text>
-          </WeatherInfoContainer>
+          <WeatherInfoItem
+            key={index}
+            icon={weatherObj.icon}
+            infoType={info}
+            infoName={WeatherInfosEnum[info]}
+            value={weatherObj.value}
+          />
         );
       });
     }
@@ -163,34 +151,13 @@ export const Weather: FC = () => {
             </>
           )}
           {location && (
-            <MapView
-              region={{
-                latitude: location.coords?.latitude,
-                longitude: location.coords?.longitude,
-                latitudeDelta: 0.1,
-                longitudeDelta: 0.1,
-              }}
-              style={styles.map}
-            >
-              <Marker
-                title="My Location"
-                description="My location"
-                coordinate={{
-                  latitude: location.coords?.latitude,
-                  longitude: location.coords?.longitude,
-                }}
-              />
-            </MapView>
+            <Map
+              latitude={location.coords?.latitude}
+              longitude={location.coords?.longitude}
+            />
           )}
         </Container>
       </ScrollView>
     </LinearGradientContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height / 2,
-  },
-});

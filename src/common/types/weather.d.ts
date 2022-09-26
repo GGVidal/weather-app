@@ -66,3 +66,5 @@ export interface CommonInfosProps {
   icon: JSX.Element;
   value: number;
 }
+
+export interface InfoTypeProps {}
