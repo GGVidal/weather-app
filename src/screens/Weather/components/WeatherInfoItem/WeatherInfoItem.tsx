@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { WeatherInfoContainer, WeatherIconContainer } from "./style";
 import { WeatherInfoItemProps } from "./types";
 import { Text } from "../../../../components/Text";
-import { handleWeatherInfo } from "../../../../utils/weather";
+import { handleWeatherInfo } from "../../../../utils/weather/weather";
 
 export const WeatherInfoItem: FC<WeatherInfoItemProps> = ({
   icon,

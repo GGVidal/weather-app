@@ -23,7 +23,7 @@ import { WeatherInfosEnum } from "../../common/types/enum";
 import { ScrollView } from "react-native";
 import { Map } from "../../components/Map";
 import { WeatherInfoItem } from "./components/WeatherInfoItem";
-import { getWeatherInfoObject } from "../../utils/weather";
+import { getWeatherInfoObject } from "../../utils/weather/weather";
 import { useNavigation } from "@react-navigation/native";
 import { FAB } from "../../components/FAB";
 

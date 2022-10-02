@@ -1,6 +1,7 @@
 import React from "react";
-import { WeatherInfosProps } from "../common/types/weather";
-import { Humidity, Wind } from "../assets";
+import { WeatherInfosProps } from "../../common/types/weather";
+import { Humidity, Wind } from "../../assets";
+import { IconByWeather } from "./types";
 
 export const handleWeatherInfo = (info: string, value: number) => {
   let unitValue;
@@ -43,7 +44,7 @@ export const getWeatherInfoObject = (
 };
 
 const getIconByWeatherType = (type: string): JSX.Element => {
-  const iconsObject = {
+  const iconsObject: IconByWeather = {
     windSpeed: <Wind width={35} height={35} />,
     humidity: <Humidity width={35} height={35} />,
     tempMax: <Wind width={35} height={35} />,
