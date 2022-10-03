@@ -60,7 +60,7 @@ export const Weather: FC = () => {
         console.log("gg location coord", locationCoord);
         setLocation(locationCoord);
         if (locationCoord) {
-          let cityLocation = await reverseGeocodeAsync({
+          const cityLocation = await reverseGeocodeAsync({
             latitude: locationCoord?.coords.latitude,
             longitude: locationCoord?.coords.longitude,
           });
