@@ -10,6 +10,7 @@ jest.mock("expo-location", () => ({
 }));
 
 jest.mock("expo-linear-gradient", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   LinearGradient: () => {},
 }));
 
