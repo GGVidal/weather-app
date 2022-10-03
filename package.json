@@ -4,10 +4,13 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
+    "preci": "rm -fr node_modules",
+    "ci": "yarn --frozen-lockfile",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
