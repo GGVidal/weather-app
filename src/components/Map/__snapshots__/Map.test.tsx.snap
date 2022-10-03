@@ -19,6 +19,7 @@ exports[`renders correctly works 1`] = `
       "streetNumber": "",
     }
   }
+  scrollDuringRotateOrZoomEnabled={true}
   style={
     Array [
       Object {
@@ -30,6 +31,8 @@ exports[`renders correctly works 1`] = `
       },
     ]
   }
+  zoomControlEnabled={true}
+  zoomTapEnabled={true}
 >
   <AIRMapMarker
     coordinate={
