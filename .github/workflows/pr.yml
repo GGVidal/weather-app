@@ -34,8 +34,8 @@ jobs:
       - name: Jest coverage report
         uses: ArtiomTr/jest-coverage-report-action@v2.0.6
         with:
-          coverage-file: ./jest-report.json
-          base-coverage-file: ./jest-report.json
+          coverage-file: ./coverage-final.json
+          base-coverage-file: ./coverage-final.json
   # Second Job
   # build-android:
   #   needs: install-and-test
