@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.81% </span>
+                <span class="strong">36.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/49</span>
+                <span class='fraction'>20/55</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.55% </span>
+                <span class="strong">37.73% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/47</span>
+                <span class='fraction'>20/53</span>
             </div>
         
             
@@ -244,7 +244,23 @@
 <a name='L179'></a><a href='#L179'>179</a>
 <a name='L180'></a><a href='#L180'>180</a>
 <a name='L181'></a><a href='#L181'>181</a>
-<a name='L182'></a><a href='#L182'>182</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -305,9 +321,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -319,10 +338,23 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -426,7 +458,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { FC, useCallback, useLayoutEffect } from "react";
-import { Image } from "react-native";
+import { Alert, Image } from "react-native";
 import { useEffect, useState } from "react";
 import {
   LocationGeocodedAddress,
@@ -450,7 +482,7 @@ import { WeatherInfosEnum } from "../../common/types/enum";
 import { ScrollView } from "react-native";
 import { Map } from "../../components/Map";
 import { WeatherInfoItem } from "./components/WeatherInfoItem";
-import { getWeatherInfoObject } from "../../utils/weather";
+import { getWeatherInfoObject } from "../../utils/weather/weather";
 import { useNavigation } from "@react-navigation/native";
 import { FAB } from "../../components/FAB";
 &nbsp;
@@ -481,14 +513,17 @@ export const Weather: FC = () =&gt; {
   useEffect(() =&gt; {
     (async () =&gt; {
       const { granted } = await requestPermission();
+<span class="cstat-no" title="statement not covered" >      console.log("gg granted", granted);</span>
 <span class="cstat-no" title="statement not covered" >      if (granted) {</span>
         const locationCoord = <span class="cstat-no" title="statement not covered" >await getCurrentPositionAsync();</span>
+<span class="cstat-no" title="statement not covered" >        console.log("gg location coord", locationCoord);</span>
 <span class="cstat-no" title="statement not covered" >        setLocation(locationCoord);</span>
 <span class="cstat-no" title="statement not covered" >        if (locationCoord) {</span>
-          let cityLocation = <span class="cstat-no" title="statement not covered" >await reverseGeocodeAsync({</span>
+          const cityLocation = <span class="cstat-no" title="statement not covered" >await reverseGeocodeAsync({</span>
             latitude: locationCoord?.coords.latitude,
             longitude: locationCoord?.coords.longitude,
           });
+<span class="cstat-no" title="statement not covered" >          console.log("GG CITY LOCATION", cityLocation);</span>
 <span class="cstat-no" title="statement not covered" >          if (cityLocation) {</span>
 <span class="cstat-no" title="statement not covered" >            setAddress(cityLocation);</span>
           }
@@ -498,12 +533,25 @@ export const Weather: FC = () =&gt; {
   }, []);
   useEffect(() =&gt; {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (location) {
+<span class="cstat-no" title="statement not covered" >      console.log("GG GET LOCATION TO FETCH DATA");</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >      fetchWeatherByLatLong(</span>
         location?.coords.latitude,
         location?.coords.longitude
       )
-        .then(<span class="fstat-no" title="function not covered" >(j</span>son) =&gt; <span class="cstat-no" title="statement not covered" >setWeatherData(json))</span>
-        .catch(<span class="fstat-no" title="function not covered" >(e</span>rr: TypeError) =&gt; <span class="cstat-no" title="statement not covered" >console.log(err))</span>;
+        .then(<span class="fstat-no" title="function not covered" >(j</span>son) =&gt; {
+<span class="cstat-no" title="statement not covered" >          console.log("GG JSON", json);</span>
+<span class="cstat-no" title="statement not covered" >          setWeatherData(json);</span>
+        })
+        .catch(<span class="fstat-no" title="function not covered" >(e</span>rr: TypeError) =&gt; {
+<span class="cstat-no" title="statement not covered" >          console.log("gg error", err);</span>
+<span class="cstat-no" title="statement not covered" >          return Alert.alert("Error", err.name, [</span>
+            {
+              text: "Ok",
+              style: "cancel",
+            },
+          ]);
+        });
     }
   }, [location]);
 &nbsp;
@@ -613,7 +661,7 @@ export const Weather: FC = () =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-09-26T14:24:52.179Z
+                at 2022-10-03T23:21:18.095Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

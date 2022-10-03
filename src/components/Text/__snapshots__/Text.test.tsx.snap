@@ -11,7 +11,6 @@ exports[`renders correctly works 1`] = `
         "color": "red",
         "fontSize": 10,
         "fontWeight": "300",
-        "letterSpacing": "",
         "lineHeight": "",
       },
     ]
