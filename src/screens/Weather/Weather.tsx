@@ -18,7 +18,7 @@ import {
 } from "./style";
 import { Text } from "../../components/Text";
 import { fetchWeatherByLatLong } from "../../utils/api";
-import { WeatherProps, CommonInfosProps } from "../../common/types/weather";
+import { WeatherProps, CommonInfosProps, WeatherInfosProps } from "../../common/types/weather";
 import { WeatherInfosEnum } from "../../common/types/enum";
 import { ScrollView } from "react-native";
 import { Map } from "../../components/Map";
@@ -134,13 +134,13 @@ export const Weather: FC = () => {
       );
       const weatherKeys: string[] = Object.keys(weatherInfos);
       return weatherKeys.map((info: string, index) => {
-        const weatherObj: CommonInfosProps = weatherInfos[info];
+        const weatherObj: CommonInfosProps = weatherInfos[info as keyof WeatherInfosProps];
         return (
           <WeatherInfoItem
             key={index}
             icon={weatherObj.icon}
             infoType={info}
-            infoName={WeatherInfosEnum[info]}
+            infoName={WeatherInfosEnum[info as keyof WeatherInfosProps]}
             value={weatherObj.value}
           />
         );
