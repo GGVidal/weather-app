@@ -1,5 +1,3 @@
-import { SvgProps } from "react-native-svg";
-
 export interface WeatherProps {
   base: string;
   clouds: Clouds;

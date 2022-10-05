@@ -1,6 +1,5 @@
 import React from "react";
-import TestRenderer from "react-test-renderer";
-import { render, fireEvent, act } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import "@testing-library/jest-dom";
 
 import { Weather } from "./Weather";
@@ -53,9 +52,5 @@ describe("renders correctly", () => {
     // this is kind of ugly, but it works.
     const renderer = render(<Weather />);
     expect(renderer).toMatchSnapshot();
-
-    // const { getByTestId } = render(<Weather />);
-    // const fabButton = getByTestId("fab_button");
-    // fireEvent.press(fabButton);
   });
 });

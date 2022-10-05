@@ -11,7 +11,7 @@
     "web": "expo start --web",
     "test:ci": "jest",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
-    "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}",
+    "prettier:write": "npx prettier  --write src/**/**/**/**/**/*.{ts,tsx}",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
   },

@@ -44,7 +44,6 @@ export const Weather: FC = () => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
-  // console.log("gg", await requestPermission());
   useLayoutEffect(() => {
     setOptions({
       headerRight: () => <FAB testID="fab_button" onPress={onRefresh} />,

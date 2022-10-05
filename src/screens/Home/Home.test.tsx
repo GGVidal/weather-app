@@ -1,6 +1,5 @@
 import React from "react";
-import TestRenderer from "react-test-renderer";
-import { render, fireEvent, act } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import "@testing-library/jest-dom";
 
 import { Home } from "./Home";
@@ -28,10 +27,4 @@ describe("renders correctly", () => {
     const renderer = render(<Home />);
     expect(renderer).toMatchSnapshot();
   });
-
-  // it("Click iniciar", async () => {
-  //   const { getByTestId } = render(<Home />);
-  //   const beginButton = getByTestId("button-permission");
-  //   fireEvent.press(beginButton);
-  // });
 });
