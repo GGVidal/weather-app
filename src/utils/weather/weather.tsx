@@ -43,7 +43,7 @@ export const getWeatherInfoObject = (
   };
 };
 
-const getIconByWeatherType = (type: string): JSX.Element => {
+const getIconByWeatherType = (type: 'windSpeed' | 'humidity' | 'tempMax' | 'tempMin'): JSX.Element => {
   const iconsObject: IconByWeather = {
     windSpeed: <Wind width={35} height={35} />,
     humidity: <Humidity width={35} height={35} />,

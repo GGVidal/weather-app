@@ -13,9 +13,10 @@ import { useNavigation } from "@react-navigation/native";
 import { LinearGradientContainer } from "../../common/style";
 import { WeatherIcon } from "../../assets";
 import { Alert, ScrollView } from "react-native";
+import { StackRoutes } from "../../navigation/types";
 
 export const Home: FC = () => {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation()
   const askPermissions = async () => {
     const { status } = await requestForegroundPermissionsAsync();
     if (status !== "granted") {
@@ -27,7 +28,7 @@ export const Home: FC = () => {
       ]);
       return;
     }
-    navigate("Weather");
+    navigate(StackRoutes.WEATHER);
   };
 
   return (
