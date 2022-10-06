@@ -36,13 +36,13 @@ jobs:
       #   with:
       #     coverage-file: ./coverage/coverage-final.json
       #     base-coverage-file: ./coverage/coverage-final.json
-  # Second Job
-  # build-android:
-  #   needs: install-and-test
-  #   uses: ./.github/workflows/android-build.yml
-  #   with:
-  #     environment: release
-  #   secrets: inherit
+  #Second Job
+  build-android:
+    needs: install-and-test
+    uses: ./.github/workflows/android-build.yml
+    with:
+      environment: release
+    secrets: inherit
 
   # Third Job
   # build-ios:
