@@ -1,0 +1,13 @@
+name: Develop Updated
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+
+  build-and-release-android:
+    uses: ./.github/workflows/build-android.yml
+    with:
+      publish: true
+    secrets: inherit
