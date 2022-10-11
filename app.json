@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "weatherapp",
-    "slug": "weatherapp",
+    "slug": "weather-app",
+    "owner": "ggvidal",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -12,15 +13,23 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.ggvidal.weatherapp"
     },
-    "web": {}
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "d79d4931-4624-465c-83ce-3658a7f661e5"
+      }
+    }
   }
 }
