@@ -11,8 +11,6 @@ on:
         type: boolean
         description: Publish to Appcenter
     secrets:
-      NPM_TOKEN:
-        required: true
       APP_CENTER_TOKEN_ANDROID:
         required: true
 
